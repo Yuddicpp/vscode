@@ -4,7 +4,7 @@
  * @Author: Yuddi 
  * @Date: 2021-08-16 13:59:04 
  * @Last Modified by: 
- * @Last Modified time: 2021-08-16 14:01:57
+ * @Last Modified time: 2021-08-16 14:34:27
  */
 
 """
@@ -30,9 +30,10 @@ y = np.dot(X, true_coef)
 y += 5 * np.random.normal(size=(n_samples, ))
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 
 reg_nnls = LinearRegression(positive=True)
 y_pred_nnls = reg_nnls.fit(X_train, y_train).predict(X_test)
 r2_score_nnls = r2_score(y_test, y_pred_nnls)
 print("NNLS R2 score", r2_score_nnls)
+print(true_coef.shape)
