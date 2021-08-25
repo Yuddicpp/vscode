@@ -64,8 +64,8 @@ TEST_SIEZ = 0.2
 x, y = datasets.make_regression(n_samples=N_SAMPLES, n_features=N_FEATURES, noise=20, random_state=0, bias=50)
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIEZ, random_state=0)
 
-# x:N_SAMPLES ¡Á N_FEATURES  y:N_SAMPLES ¡Á 1
-# x_test:(N_SAMPLES*TEST_SIEZ) ¡Á N_FEATURES
+# x:N_SAMPLES Ã— N_FEATURES  y:N_SAMPLES Ã— 1
+# x_test:(N_SAMPLES*TEST_SIEZ) Ã— N_FEATURES
 
 #add x_0 into train and test data
 x_0_train = np.ones((x_train.shape[0],1), dtype=x_train.dtype)
@@ -73,7 +73,7 @@ x_0_test = np.ones((x_test.shape[0],1), dtype=x_test.dtype)
 x_train = np.concatenate((x_0_train,x_train),axis=1)
 x_test = np.concatenate((x_0_test,x_test),axis=1)
 
-# ¦È parameters
+# Î¸ parameters
 weights = np.random.rand(N_FEATURES+1).reshape(N_FEATURES+1,1)
 
 def hypotheses(x,weights):
@@ -188,8 +188,8 @@ TEST_SIEZ = 0.2
 x, y = datasets.make_regression(n_samples=N_SAMPLES, n_features=N_FEATURES, noise=20, random_state=0, bias=50)
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=TEST_SIEZ, random_state=0)
 
-# x:N_SAMPLES ¡Á N_FEATURES  y:N_SAMPLES ¡Á 1
-# x_test:(N_SAMPLES*TEST_SIEZ) ¡Á N_FEATURES
+# x:N_SAMPLES Ã— N_FEATURES  y:N_SAMPLES Ã— 1
+# x_test:(N_SAMPLES*TEST_SIEZ) Ã— N_FEATURES
 
 #add x_0 into train and test data
 x_0_train = np.ones((x_train.shape[0],1), dtype=x_train.dtype)
@@ -197,7 +197,7 @@ x_0_test = np.ones((x_test.shape[0],1), dtype=x_test.dtype)
 x_train = np.concatenate((x_0_train,x_train),axis=1)
 x_test = np.concatenate((x_0_test,x_test),axis=1)
 
-# ¦È parameters
+# Î¸ parameters
 weights = np.random.rand(N_FEATURES+1).reshape(N_FEATURES+1,1)
 
 #Normal Equation
