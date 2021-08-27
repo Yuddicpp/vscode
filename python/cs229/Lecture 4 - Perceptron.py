@@ -1,9 +1,10 @@
 # /*
 #  * @Author: Yuddi 
-#  * @Date: 2021-08-25 11:58:49 
+#  * @Date: 2021-08-26 11:38:56 
 #  * @Last Modified by:    
-#  * @Last Modified time: 2021-08-25 11:58:49 
+#  * @Last Modified time: 2021-08-26 11:38:56 
 #  */
+
 
 
 from sklearn.datasets import make_blobs
@@ -39,11 +40,19 @@ def sigmoid_function(z):
 
 	return g
 
+def perceptron(z):
+    if(z>=0):
+        return 1
+    else:
+        return 0
+
 def hypothesis(x, THETA):
 	
 	hypothesis = np.matmul(THETA.T, x)
-	hypothesis = sigmoid_function(hypothesis[0])
+	hypothesis = perceptron(hypothesis[0])
 	return hypothesis
+
+
 
 ## Third step: Define a loss function
 def compute_loss(X, Y, THETA):
@@ -53,8 +62,9 @@ def compute_loss(X, Y, THETA):
 		h_x = hypothesis(x, THETA)
 		# if h_x == 1 --> log(1-1) --> error
 		if h_x == 1:
-			h_x = 1-0.0000000000001
-		loss += (-y) *(log(h_x) - (1-y) *log(1-h_x))
+			loss += (-y) *(log(h_x))
+		else:
+			loss +=  -(1-y) *log(1-h_x)
 
 	return loss/(X.shape[0])
 
@@ -70,12 +80,12 @@ def update_parameters(THETA, LR, y, h_x, x):
 
 plt.figure(0)
 plt.ion()
-EPOCH = 4
+EPOCH = 2
 for epoch in range(EPOCH):
 	i = 0 # retrieve H_x
 	for x, y in zip(x_train, y_train):
-		loss = compute_loss(x_train, y_train, THETA)
-		print('[{0}/{1}] loss is: {2}'.format(epoch+1, EPOCH, loss))
+		# loss = compute_loss(x_train, y_train, THETA)
+		# print('[{0}/{1}] loss is: {2}'.format(epoch+1, EPOCH, loss))
 		H_train[i] = hypothesis(x, THETA)
 		# print(H_train[i])
 		THETA = update_parameters(THETA, lr, y, H_train[i], x)
