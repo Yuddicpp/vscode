@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1630923632 "e:/vscode/LaTeX/test.tex" "e:/vscode/LaTeX/test.pdf" "test" 1630923715
+["pdflatex"] 1630924771 "e:/vscode/LaTeX/test/test.tex" "e:/vscode/LaTeX/test/test.pdf" "test" 1630924772
   "d:/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb" 1583654345 35752 024fb6c41858982481f6968b5fc26508 ""
   "d:/texlive/2019/texmf-dist/tex/latex/base/article.cls" 1583655729 19933 3097d1b31d3c45dc957096f554529032 ""
   "d:/texlive/2019/texmf-dist/tex/latex/base/size10.clo" 1583655730 8294 6d6e23d5169c0d89d173f6c7e08a005a ""
@@ -7,13 +7,13 @@
   "d:/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1583658836 3265705 a837e5be22007b39c4d27885d464272f ""
   "d:/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1583658953 4254430 5dc63e12d098fbb706e6f426d4747c24 ""
   "d:/texlive/2019/texmf.cnf" 1583658811 673 4ae7b2f49cee444c5343a45b5d0f169c ""
-  "e:/vscode/LaTeX/test.aux" 1630923633 8 a94a2480d3289e625eea47cd1b285758 ""
-  "e:/vscode/LaTeX/test.tex" 1630921883 72 0aa219ba5da9843b4fb930a111b5779b ""
-  "test.aux" 1630923633 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
-  "test.tex" 1630921883 72 0aa219ba5da9843b4fb930a111b5779b ""
+  "e:/vscode/LaTeX/test/test.aux" 1630924772 8 a94a2480d3289e625eea47cd1b285758 ""
+  "e:/vscode/LaTeX/test/test.tex" 1630924771 86 d3a844a86e9c71aa17aff81dd5dca4ec ""
+  "test.aux" 1630924772 8 a94a2480d3289e625eea47cd1b285758 "pdflatex"
+  "test.tex" 1630924771 86 d3a844a86e9c71aa17aff81dd5dca4ec ""
   (generated)
-  "test.log"
-  "e:/vscode/LaTeX/test.pdf"
-  "e:/vscode/LaTeX/test.log"
-  "test.aux"
+  "e:/vscode/LaTeX/test/test.pdf"
   "test.pdf"
+  "e:/vscode/LaTeX/test/test.log"
+  "test.aux"
+  "test.log"
