@@ -13,7 +13,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt 
 import numpy as np 
 from scipy.stats import multivariate_normal
-
+from mpl_toolkits.mplot3d import Axes3D
 
 np.random.seed(1)
 
@@ -51,69 +51,41 @@ def compute_mu_1(y_1,n):
 
 def compute_Sigma(n,mu_0,mu_1):
     cov = np.zeros((2, 2))    # convariance of two Gaussians
-    for i in range(n):
-        x_train[i].reshape(2,1)
-        if(y_train[i]==0):
-            cov += np.matmul((x_train[i]-mu_0),(x_train[i]-mu_0).T)
-        elif(y_train[i]==1):
-            cov += np.matmul((x_train[i]-mu_1),(x_train[i]-mu_1).T)
+    for x, y in zip(x_train, y_train):
+        x = x.reshape(2, 1)
+        if y == 0:
+            cov += np.matmul(x - mu_0, (x - mu_0).T)
+        else:
+            cov += np.matmul(x - mu_1, (x - mu_1).T)
     return cov/n
 
+phi = compute_phi(y_1,n)
 mu_0 = compute_mu_0(y_0,n)
 mu_1 = compute_mu_1(y_1,n)
 cov = compute_Sigma(n,mu_0,mu_1)
-print(mu_0,mu_1,cov)
+print(phi)
+print(mu_0)
+print(mu_1)
+print(cov)
+
+mean_0 = np.squeeze(mu_0)
+Gaussian_0 = multivariate_normal(mean=mean_0, cov=cov)
+mean_1 = np.squeeze(mu_1)
+Gaussian_1 = multivariate_normal(mean=mean_1, cov=cov)
 
 
+M = 100
+X, Y = np.meshgrid(np.linspace(-10,-2,M), np.linspace(-2,8,M))
+# 二维坐标数据
+d = np.dstack([X,Y])
+# 计算二维联合高斯概率
+Z_0 = Gaussian_0.pdf(d).reshape(M,M)
+Z_1 = Gaussian_1.pdf(d).reshape(M,M)
 
-def tow_d_gaussian(x, mu, COV):
-
-    n = mu.shape[0]
-    COV_det = np.linalg.det(COV)
-    COV_inv = np.linalg.inv(COV)
-    N = np.sqrt((2*np.pi)**n*COV_det)
-
-    fac = np.einsum('...k,kl,...l->...',x-mu,COV_inv,x-mu)
-
-    return np.exp(-fac/2)/N
-
-if __name__ == '__main__':
-
-    # obtain rule of paramters exploiting log-likelihood
-    # fi, miu_0, miu_1, COV = update_parameters(X_train, Y_train, fi, miu_0, miu_1, COV)
-
-    # plotting
-    fig =plt.figure()
-    # ax = fig.gca(projection='3d') # 3d plotting
-    ax = fig.gca()
-    ax.scatter(x_train[:, 0], x_train[:, 1], c=y_train, edgecolors='white')
-
-    N = 60
-    X = np.linspace(-10,-2,N)
-    Y = np.linspace(-2,8,N)
-    X,Y = np.meshgrid(X,Y)
-
-    pos = np.empty(X.shape+(2,))
-    pos[:,:,0]= X
-    pos[:,:,1] = Y
-
-    miu_0 = np.reshape(mu_0, (1, 2))[0]
-    miu_1 = np.reshape(mu_1, (1, 2))[0]
-
-    Z1 = tow_d_gaussian(pos, miu_0, cov)
-    Z2 = tow_d_gaussian(pos, miu_1, cov)
-    
-    cset = ax.contour(X,Y,Z1,zdir='z',offset=-0.15)
-    cset = ax.contour(X,Y,Z2,zdir='z',offset=-0.15)
-
-   
-    # 3d plotting
-    # ax.plot_surface(X,Y,Z1,rstride=3,cstride=3,linewidth=1,antialiased =True)
-    # ax.plot_surface(X,Y,Z2,rstride=3,cstride=3,linewidth=1,antialiased =True)
-    
-    # ax.set_zlim(-0.15,0.2)
-    # ax.set_zticks(np.linspace(0,0.2,5))
-    # ax.view_init(12,-12)
-
-
-    plt.show()
+plt.figure()
+plt.xlabel("X")
+plt.ylabel("Y")
+plt.scatter(x_test[:, 0], x_test[:, 1], c=y_test, edgecolors='white')
+plt.contour(X, Y, Z_0,  alpha =1.0, zorder=10)
+plt.contour(X, Y, Z_1,  alpha =1.0, zorder=10)
+plt.show()
