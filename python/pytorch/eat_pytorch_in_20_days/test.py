@@ -37,6 +37,7 @@ from torch.utils.data import Dataset,DataLoader,TensorDataset
 dftrain_raw = pd.read_csv('./data/titanic/train.csv')
 dftest_raw = pd.read_csv('./data/titanic/test.csv')
 
+print("test")
 print(dftest_raw.columns)
 def preprocessing(dfdata):
 
