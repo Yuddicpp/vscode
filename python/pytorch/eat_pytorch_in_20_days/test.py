@@ -8,6 +8,8 @@ import torch
 from torch import nn 
 from torch.utils.data import Dataset,DataLoader,TensorDataset
 
+from torchkeras import summary
+
 # Survived:0代表死亡，1代表存活【y标签】
 # Pclass:乘客所持票类，有三种值(1,2,3) 【转换成onehot编码】
 # Name:乘客姓名 【舍去】
@@ -75,4 +77,15 @@ y_test = dftest_raw[['Survived']].values
 dl_train = DataLoader(TensorDataset(torch.tensor(x_train).float(),torch.tensor(y_train).float()),shuffle = True, batch_size = 8)
 dl_valid = DataLoader(TensorDataset(torch.tensor(x_test).float(),torch.tensor(y_test).float()),shuffle = False, batch_size = 8)
 
-
+def create_net():
+    net = nn.Sequential()
+    net.add_module("linear1",nn.Linear(15,20))
+    net.add_module("relu1",nn.ReLU())
+    net.add_module("linear2",nn.Linear(20,15))
+    net.add_module("relu2",nn.ReLU())
+    net.add_module("linear3",nn.Linear(15,1))
+    net.add_module("sigmoid",nn.Sigmoid())
+    return net
+    
+net = create_net()
+summary(net,input_shape=(15,))
