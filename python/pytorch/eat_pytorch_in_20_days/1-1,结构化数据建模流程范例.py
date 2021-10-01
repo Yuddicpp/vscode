@@ -101,7 +101,7 @@ optimizer = torch.optim.Adam(params=net.parameters(),lr = 0.01)
 metric_func = lambda y_pred,y_true: accuracy_score(y_true.data.numpy(),y_pred.data.numpy()>0.5)
 metric_name = "accuracy"
 
-epochs = 100
+epochs = 10
 step = 1
 
 # Train
@@ -146,3 +146,6 @@ for epoch in range(1,epochs+1):
         val_loss_sum += loss.item()
         val_metric_sum += metric.item()
     print(("Validation:[Epoch = %d] loss: %.3f, "+metric_name+": %.3f") %(epoch, val_loss_sum/step, val_metric_sum/step))
+
+# save model
+torch.save(net.state_dict(), "./data/net_parameter.pkl")
