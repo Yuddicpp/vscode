@@ -8,7 +8,7 @@ import torch
 from torch import nn 
 from torch.utils.data import Dataset,DataLoader,TensorDataset
 
-from torchkeras import summary
+from sklearn.metrics import accuracy_score
 
 # Survived:0代表死亡，1代表存活【y标签】
 # Pclass:乘客所持票类，有三种值(1,2,3) 【转换成onehot编码】
@@ -88,4 +88,3 @@ def create_net():
     return net
     
 net = create_net()
-summary(net,input_shape=(15,))
