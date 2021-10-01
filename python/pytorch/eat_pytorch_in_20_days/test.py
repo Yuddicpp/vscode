@@ -88,3 +88,4 @@ def create_net():
     return net
     
 net = create_net()
+print(net)
