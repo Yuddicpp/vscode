@@ -1,6 +1,9 @@
 import os, sys
+
+from torch._C import wait
 os.chdir(sys.path[0])
 
+import datetime
 import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt
@@ -68,11 +71,11 @@ y_train = dftrain_raw[['Survived']].values
 x_test = preprocessing(dftest_raw).values
 y_test = dftest_raw[['Survived']].values
 
-# print("x_train.shape =", x_train.shape )
-# print("x_test.shape =", x_test.shape )
+print("x_train.shape =", x_train.shape )
+print("x_test.shape =", x_test.shape )
 
-# print("y_train.shape =", y_train.shape )
-# print("y_test.shape =", y_test.shape )
+print("y_train.shape =", y_train.shape )
+print("y_test.shape =", y_test.shape )
 
 dl_train = DataLoader(TensorDataset(torch.tensor(x_train).float(),torch.tensor(y_train).float()),shuffle = True, batch_size = 8)
 dl_valid = DataLoader(TensorDataset(torch.tensor(x_test).float(),torch.tensor(y_test).float()),shuffle = False, batch_size = 8)
@@ -88,4 +91,58 @@ def create_net():
     return net
     
 net = create_net()
-print(net)
+
+# 网络设置
+# 损失函数
+loss_func = nn.BCELoss()
+# 优化器
+optimizer = torch.optim.Adam(params=net.parameters(),lr = 0.01)
+# 精度
+metric_func = lambda y_pred,y_true: accuracy_score(y_true.data.numpy(),y_pred.data.numpy()>0.5)
+metric_name = "accuracy"
+
+epochs = 100
+step = 1
+
+# Train
+# The enumerate object yields pairs containing a count (from start, which defaults to zero) and a value yielded by the iterable argument.
+# step_num = data_num / batch_size
+
+for epoch in range(1,epochs+1):
+    loss_sum = 0
+    metric_sum = 0
+    net.train()
+    for step, (features,labels) in enumerate(dl_train, 1):
+
+        # 梯度清零
+        optimizer.zero_grad()
+
+        # 正向传播求损失
+        predictions = net(features)
+        loss = loss_func(predictions,labels)
+        metric = metric_func(predictions,labels)
+        
+        # 反向传播求梯度
+        loss.backward()
+        optimizer.step()
+
+        loss_sum += loss.item()
+        metric_sum += metric.item()
+
+    # print(("Train:[Epoch = %d] loss: %.3f, "+metric_name+": %.3f") %(epoch, loss_sum/step, metric_sum/step))
+
+
+    # Validation
+    # with torch.zero_grad()主要是用于停止autograd模块的工作，以起到加速和节省显存的作用，具体行为就是停止gradient计算，从而节省了GPU算力和显存，但是并不会影响dropout和batchnorm层的行为。
+    val_loss_sum = 0
+    val_metric_sum = 0
+    net.eval()
+    for step, (features,labels) in enumerate(dl_valid, 1):
+        with torch.no_grad():
+            predictions = net(features)
+            loss = loss_func(predictions,labels)
+            metric = metric_func(predictions,labels)
+
+        val_loss_sum += loss.item()
+        val_metric_sum += metric.item()
+    print(("Validation:[Epoch = %d] loss: %.3f, "+metric_name+": %.3f") %(epoch, val_loss_sum/step, val_metric_sum/step))
