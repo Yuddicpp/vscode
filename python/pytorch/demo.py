@@ -245,7 +245,7 @@ def question_4C(data_raw):
     torch.save(net.state_dict(), "./question_4C.pkl")
 
 def question_5(data):
-    data_sample = data.sample(frac=0.2)
+    data_sample = data.sample(frac=0.1)
     print(question_3C(data_sample))
 
 
@@ -257,5 +257,5 @@ data = pd.read_excel('data.xlsx')
 # print(question_3C(data))
 # question_4A(data)
 # question_4B(data)
-question_4C(data)
-# question_5(data)
+# question_4C(data)
+question_5(data)
