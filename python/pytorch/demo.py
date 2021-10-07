@@ -203,10 +203,10 @@ def question_4C(data_raw):
     
     net = create_net_4C()
     loss_func = nn.MSELoss()
-    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
+    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-5)
     net.load_state_dict(torch.load('question_4C.pkl'))
     net.train()
-    for i in range(10000):
+    for i in range(100):
         loss_sum = 0
 
         for step, (features,labels) in enumerate(train, 1):
@@ -257,5 +257,5 @@ data = pd.read_excel('data.xlsx')
 # print(question_3C(data))
 # question_4A(data)
 # question_4B(data)
-# question_4C(data)
-question_5(data)
+question_4C(data)
+# question_5(data)
