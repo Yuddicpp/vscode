@@ -6,6 +6,7 @@ import copy
 import torch 
 from torch import nn 
 from torch.utils.data import Dataset,DataLoader,TensorDataset,sampler
+from sklearn.metrics import accuracy_score
 
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
@@ -134,17 +135,23 @@ def question_4A(data_raw):
 
 def create_net_4B():
     net = nn.Sequential()
-    net.add_module("linear1",nn.Linear(8,3))
+    net.add_module("linear1",nn.Linear(8,10))
+    net.add_module("relu2",nn.ReLU())
+    net.add_module("linear3",nn.Linear(10,3))
     return net
 
 def question_4B(data):
     # data = data_raw[data_raw['会话数']>=20]
     x = data.iloc[:,2:10].to_numpy()
+    max_min_scaler = lambda x : (x-np.min(x))/(np.max(x)-np.min(x))
+    data.iloc[:,10].apply(max_min_scaler)
+    for i in range(x.shape[0]):
+        x[i,:] = x[i,:]*(data.iloc[:,10].to_numpy()[i])
     labels = data.iloc[:,11:14].to_numpy()
     train = DataLoader(TensorDataset(torch.tensor(x).float(),torch.tensor(labels).float()),shuffle=True, batch_size=8)
     net = create_net_4B()
     loss_func = nn.MSELoss()
-    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-9)
+    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
     net.train()
     for i in range(50):
         loss_array = np.ones([1,3])
@@ -163,7 +170,6 @@ def question_4B(data):
             loss_sum+=loss.item()
         loss_array = loss_array[1:,:]
         print("Loss:"+str(loss_sum/step))
-        print(loss_array)
         print("Variance of errors(Col12):"+str(np.var(loss_array[:,0])))
         print("Variance of errors(Col13):"+str(np.var(loss_array[:,1])))
         print("Variance of errors(Col14):"+str(np.var(loss_array[:,2])))
@@ -181,10 +187,11 @@ def create_net_4C():
 
 def question_4C(data_raw):
     data = data_raw[data_raw['群类别']<=4]
+    data = data.sample(frac=1)
     x = data.iloc[:,2:14].to_numpy()
     labels = data[['群类别']].to_numpy()
 
-    split_num = int(x.shape[0] * 0.8)
+    split_num = int(x.shape[0] * 0.9)
     index_list = list(range(x.shape[0]))
     train_idx, valid_idx = index_list[:split_num], index_list[split_num:]
 
@@ -196,7 +203,8 @@ def question_4C(data_raw):
     
     net = create_net_4C()
     loss_func = nn.MSELoss()
-    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-7)
+    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
+    net.load_state_dict(torch.load('question_4C.pkl'))
     net.train()
     for i in range(10000):
         loss_sum = 0
@@ -211,23 +219,30 @@ def question_4C(data_raw):
             optimizer.step()
 
             loss_sum+=loss.item()
-        print("Loss:"+str(loss_sum/step))
+        print("Epoch:"+str(i)+"  Loss:"+str(loss_sum/step))
     
     # print(net.state_dict())
 
     net.eval()
+    loss_sum = 0
+    metric_sum = 0
+    metric_func = lambda y_pred,y_true: accuracy_score(y_true.data.numpy(),y_pred.data.numpy())
     for step, (features,labels) in enumerate(test, 1):
         with torch.no_grad():
 
-            predictions = net(features)
-            print(predictions)
+            predictions = net(features).round()
+            # print(predictions,labels)
             loss = loss_func(predictions,labels)
-
+            
+            metric = metric_func(predictions,labels)
             # loss.backward()
             # optimizer.step()
 
             loss_sum+=loss.item()
-    print("Loss:"+str(loss_sum/step))
+            metric_sum+=metric.item()
+    print("Loss:"+str(loss_sum/step)+"   acu:"+str(metric_sum/step))
+
+    torch.save(net.state_dict(), "./question_4C.pkl")
 
 def question_5(data):
     data_sample = data.sample(frac=0.2)
