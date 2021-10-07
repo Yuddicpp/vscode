@@ -11,8 +11,8 @@ transform_valid = transforms.Compose([transforms.ToTensor()])
 ds_train = datasets.ImageFolder("./data/cifar2/train/",transform = transform_train,target_transform= lambda t:torch.tensor([t]).float())
 ds_valid = datasets.ImageFolder("./data/cifar2/test/",transform = transform_train,target_transform= lambda t:torch.tensor([t]).float())
 
-dl_train = DataLoader(ds_train,batch_size = 50,shuffle = True)
-dl_valid = DataLoader(ds_valid,batch_size = 50,shuffle = True)
+dl_train = DataLoader(ds_train,batch_size = 50,shuffle = True,num_workers = 8)
+dl_valid = DataLoader(ds_valid,batch_size = 50,shuffle = True,num_workers = 8)
 
 class Net(nn.Module):
     

@@ -20,7 +20,7 @@ def create_net_4C():
     return net
 
 def question_4C(data_raw):
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:1" if torch.cuda.is_available() else "cpu")
     data = data_raw[data_raw['群类别']<=4]
     x = data.iloc[:,2:14].to_numpy()
     labels = data[['群类别']].to_numpy()
