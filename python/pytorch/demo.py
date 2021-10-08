@@ -7,6 +7,7 @@ import torch
 from torch import nn 
 from torch.utils.data import Dataset,DataLoader,TensorDataset,sampler
 from sklearn.metrics import accuracy_score
+import math
 
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
@@ -142,18 +143,18 @@ def create_net_4B():
 
 def question_4B(data):
     # data = data_raw[data_raw['会话数']>=20]
+    data.iloc[:,10] = (data.iloc[:,10]-data.iloc[:,10].min())/(data.iloc[:,10].max()-data.iloc[:,10].min())
     x = data.iloc[:,2:10].to_numpy()
-    max_min_scaler = lambda x : (x-np.min(x))/(np.max(x)-np.min(x))
-    data.iloc[:,10].apply(max_min_scaler)
-    for i in range(x.shape[0]):
-        x[i,:] = x[i,:]*(data.iloc[:,10].to_numpy()[i])
     labels = data.iloc[:,11:14].to_numpy()
-    train = DataLoader(TensorDataset(torch.tensor(x).float(),torch.tensor(labels).float()),shuffle=True, batch_size=8)
+    for i in range(x.shape[0]):
+        x[i] = x[i]*math.sqrt(data.iloc[i,10])
+        labels[i] = labels[i]*math.sqrt(data.iloc[i,10])
+    train = DataLoader(TensorDataset(torch.tensor(x).float(),torch.tensor(labels).float()),shuffle=True,batch_size=8)
     net = create_net_4B()
     loss_func = nn.MSELoss()
     optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
     net.train()
-    for i in range(50):
+    for i in range(10):
         loss_array = np.ones([1,3])
         loss_sum = 0
 
@@ -256,6 +257,6 @@ data = pd.read_excel('data.xlsx')
 # question_3B(data)
 # print(question_3C(data))
 # question_4A(data)
-# question_4B(data)
-question_4C(data)
+question_4B(data)
+# question_4C(data)
 # question_5(data)
