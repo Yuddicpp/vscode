@@ -250,7 +250,7 @@ def question_5(data):
     print(question_3C(data_sample))
 
 
-data = pd.read_excel('data.xlsx')
+data = pd.read_excel('E:/vscode/python/big_data/data.xlsx')
 # 不满足正态分布
 # question_3A(data)
 # 2,3满足正态分布
