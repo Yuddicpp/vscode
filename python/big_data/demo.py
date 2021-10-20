@@ -110,7 +110,7 @@ def question_4A(data_raw):
     loss_func = nn.MSELoss()
     optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
     net.train()
-    for i in range(50):
+    for i in range(100):
         loss_array = np.ones([1,3])
         loss_sum = 0
 
@@ -136,9 +136,7 @@ def question_4A(data_raw):
 
 def create_net_4B():
     net = nn.Sequential()
-    net.add_module("linear1",nn.Linear(8,10))
-    net.add_module("relu2",nn.ReLU())
-    net.add_module("linear3",nn.Linear(10,3))
+    net.add_module("linear1",nn.Linear(8,3))
     return net
 
 def question_4B(data):
@@ -175,15 +173,15 @@ def question_4B(data):
         print("Variance of errors(Col13):"+str(np.var(loss_array[:,1])))
         print("Variance of errors(Col14):"+str(np.var(loss_array[:,2])))
     
-    # print(net.state_dict())
+    print(net.state_dict())
 
 def create_net_4C():
     net = nn.Sequential()
-    net.add_module("linear1",nn.Linear(12,50))
+    net.add_module("linear1",nn.Linear(12,20))
     net.add_module("relu1",nn.ReLU())
-    net.add_module("linear2",nn.Linear(50,10))
+    net.add_module("linear2",nn.Linear(20,4))
     net.add_module("relu2",nn.ReLU())
-    net.add_module("linear3",nn.Linear(10,1))
+    net.add_module("linear3",nn.Linear(4,1))
     return net
 
 def question_4C(data_raw):
@@ -204,8 +202,8 @@ def question_4C(data_raw):
     
     net = create_net_4C()
     loss_func = nn.MSELoss()
-    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-5)
-    net.load_state_dict(torch.load('question_4C.pkl'))
+    optimizer = torch.optim.SGD(params=net.parameters(),lr = 1e-3)
+    # net.load_state_dict(torch.load('question_4C.pkl'))
     net.train()
     for i in range(100):
         loss_sum = 0
@@ -231,10 +229,11 @@ def question_4C(data_raw):
     for step, (features,labels) in enumerate(test, 1):
         with torch.no_grad():
 
-            predictions = net(features).round()
+            predictions = net(features)
             # print(predictions,labels)
             loss = loss_func(predictions,labels)
             
+            predictions = net(features).round()
             metric = metric_func(predictions,labels)
             # loss.backward()
             # optimizer.step()
@@ -243,7 +242,7 @@ def question_4C(data_raw):
             metric_sum+=metric.item()
     print("Loss:"+str(loss_sum/step)+"   acu:"+str(metric_sum/step))
 
-    torch.save(net.state_dict(), "./question_4C.pkl")
+    # torch.save(net.state_dict(), "./question_4C.pkl")
 
 def question_5(data):
     data_sample = data.sample(frac=0.1)
@@ -257,6 +256,6 @@ data = pd.read_excel('E:/vscode/python/big_data/data.xlsx')
 # question_3B(data)
 # print(question_3C(data))
 # question_4A(data)
-question_4B(data)
+# question_4B(data)
 # question_4C(data)
-# question_5(data)
+question_5(data)
