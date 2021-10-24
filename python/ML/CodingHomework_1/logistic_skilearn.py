@@ -29,7 +29,7 @@ def Road_surface_data_process(data_raw):
         for j in range(x.shape[1]):
             if type(x[i,j]) == str:
                 x[i,j] = float(x[i,j].replace(',','.'))
-    print(x,y)
+    # print(x,y)
     return x,y
 
 X,Y = Road_surface_data_process(pd.concat([df_opel_corsa_01, df_opel_corsa_02, df_peugeot_207_01, df_peugeot_207_02], axis=0))
