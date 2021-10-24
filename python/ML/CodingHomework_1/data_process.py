@@ -70,8 +70,10 @@ x_scaled = min_max_scaler.fit(x_train)
 x_train_transformed = min_max_scaler.transform(x_train)
 x_test_transformed = min_max_scaler.transform(x_test)
 
-dl_train = DataLoader(TensorDataset(torch.tensor(x_train_transformed).float(),torch.tensor(y_train).float()),shuffle = True, batch_size = 8)
-dl_valid = DataLoader(TensorDataset(torch.tensor(x_test_transformed).float(),torch.tensor(y_test).float()),shuffle = False, batch_size = 8)
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
+dl_train = DataLoader(TensorDataset(torch.tensor(x_train_transformed).float().to(device),torch.tensor(y_train).float().to(device)),shuffle = True, batch_size = 8)
+dl_valid = DataLoader(TensorDataset(torch.tensor(x_test_transformed).float().to(device),torch.tensor(y_test).float().to(device)),shuffle = False, batch_size = 8)
 
 
 def create_net():
@@ -90,16 +92,10 @@ net = create_net()
 
 # 定义模型
 ... 
-
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-net.to(device) # 移动模型到cuda
+net = net.to(device) # 移动模型到cuda
 
 # 训练模型
-...
 
-dl_train = dl_train.cuda() # 移动数据到cuda
-dl_valid = dl_valid.cuda() # 或者  labels = labels.cuda() if torch.cuda.is_available() else labels
-...
 
 
 loss_func  = torch.nn.BCELoss()
