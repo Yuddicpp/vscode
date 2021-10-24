@@ -8,6 +8,7 @@ import torch
 from torch import nn 
 from torch.utils.data import Dataset,DataLoader,TensorDataset
 from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
 # for dirname, _, filenames in os.walk('Dataset_traffic-driving-style-road-surface-condition'):
 #     for filename in filenames:
@@ -28,7 +29,7 @@ def Road_surface_data_process(data_raw):
         for j in range(x.shape[1]):
             if type(x[i,j]) == str:
                 x[i,j] = float(x[i,j].replace(',','.'))
-    print(x,y)
+    # print(x,y)
     return x,y
 
 X,Y = Road_surface_data_process(pd.concat([df_opel_corsa_01, df_opel_corsa_02, df_peugeot_207_01, df_peugeot_207_02], axis=0))
@@ -70,10 +71,10 @@ net = net.to(device) # 移动模型到cuda
 
 loss_func  = torch.nn.BCELoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=0.01)
+acc = []
+EPOCHS = 50
+for epoch in range(1,EPOCHS):  
 
-for epoch in range(1,100):  
-
-    # 1，训练循环-------------------------------------------------
     net.train()
     loss_sum = 0.0
     metric_sum = 0.0
@@ -96,10 +97,8 @@ for epoch in range(1,100):
         # 打印batch级别日志
         loss_sum += loss.item()
         metric_sum += metric.item()
-        # if step%1000 == 0:   
-        #     print(("[step = %d] loss: %.3f, "+"Accuracy:"+": %.3f") % (step, loss_sum/step, metric_sum/step))
-            
-        # 2，验证循环-------------------------------------------------
+
+
     net.eval()
     val_loss_sum = 0.0
     val_metric_sum = 0.0
@@ -117,4 +116,8 @@ for epoch in range(1,100):
     # 打印epoch级别日志
     info = (epoch, loss_sum/step, metric_sum/step,val_loss_sum/val_step, val_metric_sum/val_step)
     print(("\nEPOCH = %d, loss = %.3f,"+ "Accuracy" + "  = %.3f, val_loss = %.3f, "+"val_"+ "Accuracy"+" = %.3f\n\n")%info) 
+    acc.append(val_metric_sum/val_step)
     # print("-------------------------------------------------")
+
+plt.plot(range(1,EPOCHS),acc)
+plt.show()
