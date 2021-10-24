@@ -117,7 +117,7 @@ for epoch in range(1,100):
         # 正向传播求损失
         predictions = net(features)
         loss = loss_func(predictions,labels)
-        metric = accuracy_score( np.rint(predictions.detach().numpy()),labels.detach().numpy())
+        metric = accuracy_score( np.rint(predictions.cpu().detach().numpy()),labels.cpu().detach().numpy())
         
         # 反向传播求梯度
         loss.backward()
@@ -140,7 +140,7 @@ for epoch in range(1,100):
         with torch.no_grad():
             predictions = net(features)
             val_loss = loss_func(predictions,labels)
-            val_metric = accuracy_score( np.rint(predictions.detach().numpy()),labels.detach().numpy())
+            val_metric = accuracy_score( np.rint(predictions.cpu().detach().numpy()),labels.cpu().detach().numpy())
         val_loss_sum += val_loss.item()
         val_metric_sum += val_metric.item()
     
