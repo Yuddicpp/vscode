@@ -72,7 +72,7 @@ net = net.to(device) # 移动模型到cuda
 loss_func  = torch.nn.BCELoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=0.01)
 acc = []
-EPOCHS = 50
+EPOCHS = 100
 for epoch in range(1,EPOCHS):  
 
     net.train()
@@ -120,4 +120,5 @@ for epoch in range(1,EPOCHS):
     # print("-------------------------------------------------")
 
 plt.plot(range(1,EPOCHS),acc)
+plt.ylim(0, 1);
 plt.show()
