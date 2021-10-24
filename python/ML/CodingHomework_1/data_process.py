@@ -97,8 +97,8 @@ net.to(device) # 移动模型到cuda
 # 训练模型
 ...
 
-dl_train = dl_train.to(device) # 移动数据到cuda
-dl_valid = dl_valid.to(device) # 或者  labels = labels.cuda() if torch.cuda.is_available() else labels
+dl_train = dl_train.cuda() # 移动数据到cuda
+dl_valid = dl_valid.cuda() # 或者  labels = labels.cuda() if torch.cuda.is_available() else labels
 ...
 
 
