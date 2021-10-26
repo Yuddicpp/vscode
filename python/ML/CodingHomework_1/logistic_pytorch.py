@@ -67,7 +67,7 @@ net = net.to(device) # 移动模型到cuda
 
 # 训练模型
 
-
+net.load_state_dict(torch.load('logistic.pkl'))
 
 loss_func  = torch.nn.BCELoss()
 optimizer = torch.optim.SGD(net.parameters(), lr=0.01)
@@ -118,6 +118,8 @@ for epoch in range(1,EPOCHS):
     print(("\nEPOCH = %d, loss = %.3f,"+ "Accuracy" + "  = %.3f, val_loss = %.3f, "+"val_"+ "Accuracy"+" = %.3f\n\n")%info) 
     acc.append(val_metric_sum/val_step)
     # print("-------------------------------------------------")
+
+torch.save(net.state_dict(), "./logistic.pkl")
 
 plt.plot(range(1,EPOCHS),acc)
 plt.ylim(0, 1);
