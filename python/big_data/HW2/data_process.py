@@ -14,9 +14,10 @@ import numpy as np
 # print(data_train)
 # data_train.to_csv("data_train.csv")
 
-# 读取数据文件
+# 读取训练数据文件
 df_train = pd.read_csv('~/work/data_train.csv',index_col=0)
 print(df_train)
+
 
 # df_test = pd.read_csv('data_test.csv',index_col=0)
 # print(df_test)
