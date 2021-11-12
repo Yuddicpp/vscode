@@ -18,6 +18,8 @@ import numpy as np
 df_train = pd.read_csv('~/work/data_train.csv',index_col=0)
 print(df_train)
 
-
+# 读取测试数据文件
 # df_test = pd.read_csv('data_test.csv',index_col=0)
 # print(df_test)
+
+
