@@ -16,6 +16,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 # print(data_train)
 # data_train.to_csv("data_train.csv")
 
+
+#work2
 # 读取训练数据文件
 df_train = pd.read_csv('~/work/data_train.csv',index_col=0)
 # print(df_train)
