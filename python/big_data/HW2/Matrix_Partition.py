@@ -42,7 +42,7 @@ for i in range(EPOCH):
     V = V - alpha/(1+0.1*i) * dV
     J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U)))\
            + lamda * np.sum(np.sum(np.square(V)))
-    RMSE[i] = np.sqrt(np.sum(np.sum(np.square(np.dot(U, V.T) - data_test)))/1720000)
+    RMSE[i] = np.sqrt(np.sum(np.sum(np.square(np.multiply(A, np.dot(U, V.T)) - data_test)))/1719466)
     print(i)
 # Visualization
 X = np.dot(U, V.T)
