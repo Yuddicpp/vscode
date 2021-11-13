@@ -21,9 +21,9 @@ data_train = df_train.to_numpy()
 data_test = df_test.to_numpy()
 
 alpha = 0.0001
-lamda = 1
-K = 100
-EPOCH = 50
+lamda = 0.01
+K = 10
+EPOCH = 100
 
 
 
@@ -33,19 +33,18 @@ V = np.random.randn(10000, K)*0.1
 
 J = np.zeros(EPOCH)
 RMSE = np.zeros(EPOCH)
+
 for i in range(EPOCH):
     dU = np.dot(np.multiply(A, (np.dot(U, V.T) - data_train)), V) + 2 * lamda * U
-    dV = np.dot(np.multiply(A, (np.dot(U, V.T) - data_train)), U) + 2 * lamda * V
-    U = U - alpha * dU # Learning rate decay
+    dV = np.dot((np.multiply(A, (np.dot(U, V.T) - data_train))).T, U) + 2 * lamda * V
+    U = U - alpha * dU 
     V = V - alpha * dV
-    J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U)))\
-           + lamda * np.sum(np.sum(np.square(V)))
-    RMSE[i] = np.sqrt(np.sum(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test)))/1719466)
-    print(i)
-# Visualization
-X = np.dot(U, V.T)
+    # J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U)))\
+    #        + lamda * np.sum(np.sum(np.square(V)))
+    RMSE[i] = np.sqrt(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test))/1719466)
+    print("EPOCH: "+str(i)+"  RMSE:"+str(RMSE[i]))
+
+
 plt.plot(range(EPOCH), RMSE)
-plt.show()
-plt.plot(range(EPOCH), J)
 plt.show()
 print(RMSE[EPOCH-1])
