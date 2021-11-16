@@ -23,7 +23,7 @@ data_test = df_test.to_numpy()
 alpha = 0.0001
 lamda = 1
 K = 100
-EPOCH = 50
+EPOCH = 1000
 
 
 
@@ -44,10 +44,10 @@ for i in range(EPOCH):
            + lamda * np.sum(np.sum(np.square(V)))
     RMSE[i] = np.sqrt(np.sum(np.sum(np.square(np.multiply(A, np.dot(U, V.T)) - data_test)))/1719466)
     print(i)
-# Visualization
-X = np.dot(U, V.T)
+
+
+
 plt.plot(range(EPOCH), RMSE)
-plt.show()
-plt.plot(range(EPOCH), J)
-plt.show()
+plt.savefig('RMSE.png')
+# plt.show()
 print(RMSE[EPOCH-1])
