@@ -10,11 +10,11 @@ import matplotlib.pyplot as plt
 
 #work2
 # 读取训练数据文件
-df_train = pd.read_csv('E:\BaiduNetdiskWorkspace\研究生\课程\大数据分析(B)\HW2\Project2-data\data_train.csv',index_col=0)
+df_train = pd.read_csv('~/work/data_train.csv',index_col=0)
 # print(df_train)
 
 # 读取测试数据文件
-df_test = pd.read_csv('E:\BaiduNetdiskWorkspace\研究生\课程\大数据分析(B)\HW2\Project2-data\data_test.csv',index_col=0)
+df_test = pd.read_csv('~/work/data_test.csv',index_col=0)
 # print(df_test)
 
 data_train = df_train.to_numpy()
@@ -46,5 +46,5 @@ for i in range(EPOCH):
 
 
 plt.plot(range(EPOCH), RMSE)
-plt.show()
+plt.savefig('K=10,lamda=0.01.jpg')
 print(RMSE[EPOCH-1])
