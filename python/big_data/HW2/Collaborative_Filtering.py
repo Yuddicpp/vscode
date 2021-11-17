@@ -23,7 +23,7 @@ sim = cosine_similarity(data_train)
 def score(i,j): #第i个用户的第j个电影
     Denominator = 0 #∑_k sim(X(i),X(k))score(k,j) 
     molecular = 0 #∑_k sim(X(i),X(k))
-    users = ((np.argsort(sim[i,:]))[::-1])[1:50]#返回相似用户序列号
+    users = ((np.argsort(sim[i,:]))[::-1])[1:10]#返回相似用户序列号  
     for k in users:
         sim_ik = sim[i,k]
         Denominator+=sim_ik*data_train[k,j]
@@ -53,4 +53,12 @@ print("Time:"+str(end_time-begin_time))
 print((RMSE/Test_num)**0.5)
 print(Test_num)
 
+#50 
+# Time:1253.5741956233978
+# 1.972846441587203
+# 1719466
 
+#30
+# Time:1268.786537885666
+# 1.9664577108322285
+# 1719466
