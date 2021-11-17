@@ -46,6 +46,7 @@ for i in range(data_test.shape[0]):
     for j in range(data_test.shape[1]):
         if(data_test[i,j]!=0):
             RMSE+=(score(i,j)-data_test[i,j])**2
+            Test_num+=1
 
 end_time = time()
 print("Time:"+str(end_time-begin_time))
