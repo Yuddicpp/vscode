@@ -29,7 +29,10 @@ def score(i,j): #第i个用户的第j个电影
             sim_ik = sim[i,k]
             Denominator+=sim_ik*data_train[k,j]
             molecular+=sim_ik
-    return Denominator/molecular+np.mean(data_train[i,:])+np.mean(data_train[:,j])-np.mean(data_train)
+    if(molecular!=0):
+        return Denominator/molecular+np.mean(data_train[i,:])+np.mean(data_train[:,j])-np.mean(data_train)
+    else:
+        return np.mean(data_train[i,:])+np.mean(data_train[:,j])-np.mean(data_train)
 
 
 # begin_time = time()

@@ -35,7 +35,7 @@ def Matrix_partition(K,lamda):
     U = np.random.randn(10000, K)*0.1
     V = np.random.randn(10000, K)*0.1
 
-    # J = np.zeros(EPOCH)
+    J = np.zeros(EPOCH)
     RMSE = np.zeros(EPOCH)
 
     for i in range(EPOCH):
@@ -43,29 +43,36 @@ def Matrix_partition(K,lamda):
         dV = np.dot((np.multiply(A, (np.dot(U, V.T) - data_train))).T, U) + 2 * lamda * V
         U = U - alpha * dU 
         V = V - alpha * dV
-        # J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U)))\
-        #        + lamda * np.sum(np.sum(np.square(V)))
-        RMSE[i] = np.sqrt(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test))/1719466)
-        print("EPOCH: "+str(i)+"  RMSE:"+str(RMSE[i]))
+        J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U))) + lamda * np.sum(np.sum(np.square(V)))
+        # RMSE[i] = np.sqrt(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test))/1719466)
+        print("EPOCH: "+str(i)+"  J:"+str(J[i]))
 
 
     legend = 'K='+str(K)+',lamda='+str(lamda)
-    plt.plot(range(EPOCH), RMSE,label=legend)
+    plt.plot(range(EPOCH), J,label=legend)
     plt.legend()
-    print(RMSE[EPOCH-1])
+    print(J[EPOCH-1])
 
-Matrix_partition(10,0.001)
+# Matrix_partition(10,0.001)
+# Matrix_partition(10,0.01)
+# Matrix_partition(10,0.1)
+# Matrix_partition(10,1)
+# Matrix_partition(50,0.001)
+# Matrix_partition(10,0.01)
+# Matrix_partition(50,0.1)
+# Matrix_partition(50,1)
+# Matrix_partition(100,0.001)
+# Matrix_partition(100,0.01)
+# Matrix_partition(100,0.1)
+# Matrix_partition(100,1)
+# plt.savefig('RMSE_100.jpg')
+
+
+# Matrix_partition(10,0.01)
+# plt.savefig('RMSE_K=50,lamda=0.01.jpg')
+# 0.9112685955521884
+
 Matrix_partition(10,0.01)
-Matrix_partition(10,0.1)
-Matrix_partition(10,1)
-Matrix_partition(50,0.001)
-Matrix_partition(10,0.01)
-Matrix_partition(50,0.1)
-Matrix_partition(50,1)
-Matrix_partition(100,0.001)
-Matrix_partition(100,0.01)
-Matrix_partition(100,0.1)
-Matrix_partition(100,1)
-plt.savefig('RMSE_100.jpg')
+plt.savefig('J_K=50,lamda=0.01.jpg')
 
 
