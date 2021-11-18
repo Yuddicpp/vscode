@@ -74,5 +74,5 @@ def Matrix_partition(K,lamda):
 
 Matrix_partition(10,0.01)
 plt.savefig('J_K=50,lamda=0.01.jpg')
-
+# 2768791.2202040525  
 
