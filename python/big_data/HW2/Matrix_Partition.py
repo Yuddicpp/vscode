@@ -27,7 +27,7 @@ def Matrix_partition(K,lamda):
     alpha = 0.0001
     # lamda = 0.01
     # K = 10
-    EPOCH = 1000
+    EPOCH = 100
 
 
 
@@ -49,7 +49,7 @@ def Matrix_partition(K,lamda):
         print("EPOCH: "+str(i)+"  RMSE:"+str(RMSE[i]))
 
 
-    legend = 'K='+str(K)+',lamda='+str(lamda)+'.jpg'
+    legend = 'K='+str(K)+',lamda='+str(lamda)
     plt.plot(range(EPOCH), RMSE,label=legend)
     plt.legend()
     print(RMSE[EPOCH-1])
@@ -66,6 +66,6 @@ Matrix_partition(100,0.001)
 Matrix_partition(100,0.01)
 Matrix_partition(100,0.1)
 Matrix_partition(100,1)
-plt.savefig('RMSE.jpg')
+plt.savefig('RMSE_100.jpg')
 
 
