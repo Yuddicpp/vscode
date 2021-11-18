@@ -21,16 +21,10 @@ df_test = pd.read_csv('~/work/data_test.csv',index_col=0)
 data_train = df_train.to_numpy()
 data_test = df_test.to_numpy()
 
+alpha = 0.0001
+EPOCH = 100
+
 def Matrix_partition(K,lamda):
-
-
-    alpha = 0.0001
-    # lamda = 0.01
-    # K = 10
-    EPOCH = 100
-
-
-
     A = data_train > 0
     U = np.random.randn(10000, K)*0.1
     V = np.random.randn(10000, K)*0.1
@@ -44,14 +38,14 @@ def Matrix_partition(K,lamda):
         U = U - alpha * dU 
         V = V - alpha * dV
         J[i] = 1/2*np.sum(np.sum(np.square(np.multiply(A, (data_train - np.dot(U, V.T)))))) + lamda * np.sum(np.sum(np.square(U))) + lamda * np.sum(np.sum(np.square(V)))
-        # RMSE[i] = np.sqrt(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test))/1719466)
-        print("EPOCH: "+str(i)+"  J:"+str(J[i]))
+        RMSE[i] = np.sqrt(np.sum(np.square(np.multiply(data_test > 0, np.dot(U, V.T)) - data_test))/1719466)
+        print("EPOCH: "+str(i)+"  RMSE:"+str(RMSE[i]))
 
 
     legend = 'K='+str(K)+',lamda='+str(lamda)
-    plt.plot(range(EPOCH), J,label=legend)
+    plt.plot(range(EPOCH), RMSE,label=legend)
     plt.legend()
-    print(J[EPOCH-1])
+    print(RMSE[EPOCH-1])
 
 # Matrix_partition(10,0.001)
 # Matrix_partition(10,0.01)
@@ -72,7 +66,7 @@ def Matrix_partition(K,lamda):
 # plt.savefig('RMSE_K=50,lamda=0.01.jpg')
 # 0.9112685955521884
 
-Matrix_partition(10,0.01)
-plt.savefig('J_K=50,lamda=0.01.jpg')
+# Matrix_partition(10,0.01)
+# plt.savefig('J_K=50,lamda=0.01.jpg')
 # 2768791.2202040525  
 
