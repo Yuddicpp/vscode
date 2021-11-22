@@ -23,17 +23,15 @@ def dataset_input(weibo_train_file_path,weibo_predict_file_path):
 
 SEPERATEDAY =date(2015,6, 30)
 BEGINDAY = date(2015, 2, 1)
-path=os.path.abspath(os.path.dirname(os.path.dirname(__file__)))+'\\data'
-os.chdir(path)  ## change dir to '~/files'
 
-weibo_train_file_path = "weibo_train_data.txt"
-weibo_train_sort_path="weibo_train_data_sort.txt"
-weibo_predict_file_path = "weibo_predict_data.txt"
-weibo_predict_sort_path = "weibo_predict_data_sort.txt"
-weibo_train_five_file_path = "weibo_train_five.txt"
-weibo_train_last_file_path = "weibo_train_last.txt"
-uid_features_str_file_path="uid_features_str.txt"
-weibo_result_file_path="weibo_result.txt"
+weibo_train_file_path = "/home/zhangsy//work/weibo_data/weibo_train_data.txt"
+weibo_train_sort_path="/home/zhangsy//work/weibo_data/weibo_train_data_sort.txt"
+weibo_predict_file_path = "/home/zhangsy//work/weibo_data/weibo_predict_data.txt"
+weibo_predict_sort_path = "/home/zhangsy//work/weibo_data/weibo_predict_data_sort.txt"
+weibo_train_five_file_path = "/home/zhangsy//work/weibo_data/weibo_train_five.txt"
+weibo_train_last_file_path = "/home/zhangsy//work/weibo_data/weibo_train_last.txt"
+uid_features_str_file_path="/home/zhangsy//work/weibo_data/uid_features_str.txt"
+weibo_result_file_path="/home/zhangsy//work/weibo_data/weibo_result.txt"
 
 
 starttime = datetime.now()
