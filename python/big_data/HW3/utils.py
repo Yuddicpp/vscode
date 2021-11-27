@@ -2,6 +2,7 @@ import numpy as np
 import os
 import random
 from scipy import misc
+import imageio
 
 def LoadData(num_classes = 50, num_samples_per_class_train = 15, num_samples_per_class_test = 5, seed = 1):
     """
@@ -26,7 +27,7 @@ def LoadData(num_classes = 50, num_samples_per_class_train = 15, num_samples_per
     dim_input = 28 * 28   # 784
     
     # construct folders
-    data_folder = './omniglot_resized'
+    data_folder = 'omniglot_resized'
     character_folders = [os.path.join(data_folder, family, character)
                          for family in os.listdir(data_folder)
                          if os.path.isdir(os.path.join(data_folder, family))
@@ -91,7 +92,7 @@ def image_file_to_array(filename, dim_input):
     Returns:
         1 channel image
     """
-    image = misc.imread(filename)
+    image = imageio.imread(filename)
     image = image.reshape([dim_input])
     image = image.astype(np.float32) / 255.0
     image = 1.0 - image
