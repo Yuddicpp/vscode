@@ -4,6 +4,7 @@
 #include<iostream>
 #include<stack>
 #include<queue>
+#include<vector>
 
 using namespace std;
 
@@ -27,10 +28,11 @@ using namespace std;
 //     }
 // }
 
-// int main(){
-//     cout<<fib(95)<<endl;
-    
-
-//     return 0;
-// }
+int main(){
+    // cout<<fib(95)<<endl;
+    int k[4]={1,2,3,4};
+    int *j=&k[0];
+    cout<<j<<endl;
+    return 0;
+}
 
