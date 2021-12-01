@@ -13,7 +13,7 @@ hold on
 ax = gca;
 ax.GridColor = [1, 1, 1];
 
-filepath='loc1.txt';
+filepath='loc.txt';
 file = fopen(filepath);
 fpos=0;
 while 1
