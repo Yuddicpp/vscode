@@ -5,6 +5,6 @@ close all;
 
 obj=serial_config();
 BLE_location(obj);
-end
+end  
 
 %fclose(instrfind)

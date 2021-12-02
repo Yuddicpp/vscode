@@ -4,7 +4,8 @@ close all
 %后处理版本代码
 % filepath='test.txt';
 % filepath = '数据\实验6\车锁\x=0.62_y=1_h=0.54';
-filepath = 'E:\SGroup\Bluetooth\data_process\10.21数据\实验6\车锁\x=0.62_y=0_h=0.54'
+% filepath = 'E:\SGroup\Bluetooth\data_process\10.21数据\实验6\车锁\x=0.62_y=0_h=0.54'
+filepath = 'E:\vscode\matlab\read_data\didi'
 % filepath='E:\滴滴\汪博文\蓝牙(2)\13天线\data\data_laoyang\0612\circle4.txt';
 
 % [Idata,Qdata,rssi]=read_file(filepath);
