@@ -18,3 +18,4 @@ def nums():
     value2 = 6
     return value1,value2
 
+print(type(nums()))
