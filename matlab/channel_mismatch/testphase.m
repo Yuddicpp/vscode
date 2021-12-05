@@ -8,7 +8,7 @@ datatmp(:,:,375:395) = data(:,:,1:21);
 data=datatmp;
 amp=abs(data);
 flag=1;
-for ii=1:size(amp,3);
+for ii=1:size(amp,3)
    tmp=squeeze(amp(:,:,ii));
    if(mean(mean(tmp)))>500
       continue; 
