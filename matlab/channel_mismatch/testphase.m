@@ -28,6 +28,8 @@ phase=angle(data);
 test_phase=zeros(12,16*size(data,3));
 for ii=1:size(data,3)
     test_phase(:,(ii-1)*16+1:ii*16)=phase(:,:,ii);
+%     2021.12.6 didi
+%     test_phase(:,ii)=phase(:,1,ii);
 end
 for ii=2:12
    test_phase(ii,:)= test_phase(ii,:)-test_phase(1,:);
