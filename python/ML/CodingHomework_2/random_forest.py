@@ -1,6 +1,8 @@
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import train_test_split
+from sklearn import preprocessing
 
 
 
@@ -34,18 +36,15 @@ data['Education'] = data['Education'].map(Education_to_state)
 data['City'] = data['City'].map(City_to_state)
 data['Gender'] = data['Gender'].map(Gender_to_state)
 data['EverBenched']= data['EverBenched'].map(EverBenched_to_state)
-data['JoiningYear'] = data['JoiningYear'] - data['JoiningYear'].min()
-data['Age'] = data['Age'] - data['JoiningYear'].min()
+data['JoiningYear'] = data['JoiningYear']
+data['Age'] = data['Age']
 
+# print(data)
 data = data.to_numpy()
 
-train_data = data[:4000,:]
-train_label = label[:4000]
+train_data,test_data,train_label,test_label = train_test_split(data,label,test_size=0.1,shuffle=True)
 
-test_data = data[4000:,:]
-test_label = label[4000:]
-
-model = RandomForestClassifier(n_estimators=10,bootstrap = True,max_features = 'sqrt')
+model = RandomForestClassifier(n_estimators=20,bootstrap = True,max_features = 'sqrt')
 model.fit(train_data, train_label)
 
 rf_predictions = model.predict(test_data)
