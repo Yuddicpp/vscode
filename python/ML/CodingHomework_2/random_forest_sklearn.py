@@ -10,6 +10,29 @@ from sklearn.ensemble import RandomForestClassifier
 
 
 
+def age_to(x):
+    if(x<23):
+        return 0
+    elif(x<25):
+        return 1
+    elif(x<26):
+        return 2
+    elif(x<27):
+        return 3
+    elif(x<28):
+        return 4
+    elif(x<31):
+        return 5
+    elif(x<36):
+        return 6
+    # elif(x<35):
+    #     return 7
+    # elif(x<37):
+    #     return 8
+    # elif(x<39):
+    #     return 9
+    else:
+        return 7
 
 def data_process():
     """
@@ -47,7 +70,9 @@ def data_process():
     data['Gender'] = data['Gender'].map(Gender_to_state)
     data['EverBenched']= data['EverBenched'].map(EverBenched_to_state)
     data['JoiningYear'] = data['JoiningYear'] - data['JoiningYear'].min()
-    data['Age'] = data['Age'] - data['Age'].min()
+    # data['Age'] = data['Age'] - data['Age'].min()
+    data['Age'] = data['Age'].map(age_to)
+    # print(data['Age'])
 
     # print(data)
     data = data.to_numpy()
