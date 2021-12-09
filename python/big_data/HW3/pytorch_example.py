@@ -74,7 +74,7 @@ class Net(nn.Module):
 
 model = Net()
 model = model.to(device)
-epochs = 1000
+epochs = 1000000
 LR = 0.01
 optimizer =  torch.optim.SGD(model.parameters(), lr=LR)
 criterion = nn.CrossEntropyLoss()
@@ -87,6 +87,8 @@ train_image = train_image.reshape(-1,28,28)
 test_image = test_image.reshape(-1,28,28)
 train_image = train_image[:,np.newaxis,:,:]
 test_image = test_image[:,np.newaxis,:,:]
+
+
 # dl_train = DataLoader(TensorDataset(torch.tensor(train_image).to(torch.float32).to(device),torch.tensor(train_label).long().to(device)),shuffle = True, batch_size = 8)
 # dl_valid = DataLoader(TensorDataset(torch.tensor(test_image).to(torch.float32).to(device),torch.tensor(test_label).long().to(device)),shuffle = False, batch_size = 8)
 
@@ -101,7 +103,8 @@ for epoch in range(epochs):
 
     loss.backward()
     optimizer.step()
-    print("EPOCH: "+str(epoch)+"; Loss: "+str(loss.item()))
+    if(epoch%100==0):
+        print("EPOCH: "+str(epoch)+"; Loss: "+str(loss.item()))
   
 # get predictions on test_image
 model.eval()
@@ -111,8 +114,8 @@ with torch.no_grad():
     pred = torch.argmax(pred,dim=1).cpu().numpy()
     
 # evaluation
-print(test_label)
-print(pred)
+# print(test_label)
+# print(pred)
 print("Test Accuracy:", np.mean(1.0 * (pred == test_label)))
 # note that you should not use test_label elsewhere
 
