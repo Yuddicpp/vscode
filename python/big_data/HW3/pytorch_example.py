@@ -152,7 +152,7 @@ for epoch in range(epochs):
 plt.plot(range(epochs),loss_epoch)
 plt.xlabel(args.model_type)
 plt.ylabel("Loss")
-plt.savefig(args.model_type+"_"+str(args.epoch)+".png")
+plt.savefig(args.model_type+"_"+str(args.opti)+".png")
 
 # get predictions on test_image
 model.eval()
