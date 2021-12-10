@@ -100,7 +100,8 @@ estimator = 20
 result = []
 for i in range(estimator):
     model = tree.DecisionTreeClassifier(criterion="gini",splitter="random")
-    model.fit(bootstrap_sampling(train_data,train_label)[0],bootstrap_sampling(train_data,train_label)[1])
+    data,label = bootstrap_sampling(train_data,train_label)
+    model.fit(data,label)
     result.append(model.predict(test_data))
 
 
