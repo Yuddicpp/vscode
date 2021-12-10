@@ -8,6 +8,7 @@ from torch.nn.modules.flatten import Flatten
 from utils import *
 from torch.utils.data import Dataset,DataLoader,TensorDataset
 import setproctitle
+import matplotlib.pyplot as plt
 
 # define settings
 parser = argparse.ArgumentParser()
@@ -35,7 +36,7 @@ args = parser.parse_args()
 ### Your Code Here ###
 
 setproctitle.setproctitle("zhangsy")
-device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+device = torch.device("cuda:2" if torch.cuda.is_available() else "cpu")
 
 # Model
 
@@ -136,6 +137,8 @@ data = torch.tensor(train_image).to(torch.float32).to(device)
 label = torch.tensor(train_label).long().to(device)
 test_image = torch.tensor(test_image).to(torch.float32).to(device)
 # train model using train_image and train_label
+
+loss_epoch = []
 for epoch in range(epochs):
     optimizer.zero_grad()
     ### Your Code Here ###
@@ -144,8 +147,12 @@ for epoch in range(epochs):
 
     loss.backward()
     optimizer.step()
-    # if(epoch%100==0):
+    
+    loss_epoch.append(loss.item())
     print("EPOCH: "+str(epoch)+"; Loss: "+str(loss.item()))
+
+plt.plot(range(epochs),loss_epoch)
+plt.show()
 
 # get predictions on test_image
 model.eval()
