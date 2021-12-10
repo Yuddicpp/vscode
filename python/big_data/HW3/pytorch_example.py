@@ -86,9 +86,7 @@ class FC_Net(nn.Module):
         super(FC_Net,self).__init__()
         self.FC_model = nn.Sequential(
             nn.Flatten(),
-            nn.Linear(28*28,1024),
-            nn.ReLU(),
-            nn.Linear(1024,512),
+            nn.Linear(28*28,512),
             nn.ReLU(),
             nn.Linear(512,256),
             nn.ReLU(),
@@ -152,7 +150,9 @@ for epoch in range(epochs):
     print("EPOCH: "+str(epoch)+"; Loss: "+str(loss.item()))
 
 plt.plot(range(epochs),loss_epoch)
-plt.show()
+plt.xlabel("FC")
+plt.ylabel("Loss")
+plt.savefig("FC.png")
 
 # get predictions on test_image
 model.eval()
