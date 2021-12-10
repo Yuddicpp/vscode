@@ -96,10 +96,10 @@ def bootstrap_sampling(train_data,train_label):
 
 train_data,test_data,train_label,test_label  = data_process()
 
-estimator = 10
+estimator = 20
 result = []
 for i in range(estimator):
-    model = tree.DecisionTreeClassifier()
+    model = tree.DecisionTreeClassifier(criterion="gini",splitter="random")
     model.fit(bootstrap_sampling(train_data,train_label)[0],bootstrap_sampling(train_data,train_label)[1])
     result.append(model.predict(test_data))
 
