@@ -142,7 +142,7 @@ end
 
 function loc=location(para1,filepath)
 %%
-height=0.54;                                                                   %基站与标签高度差，须设置与实际一致
+height=1.881;                                                                   %基站与标签高度差，须设置与实际一致
 para=para1*pi/180;
 para(:,2)=pi-para(:,2);                                                         %由于补偿的缘故，方位角需要偏转pi
 para1(:,2)=180-para1(:,2); 

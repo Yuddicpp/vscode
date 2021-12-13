@@ -9,11 +9,11 @@ gp(1:12,flag)=ground_phase(:,1);
 ga(1:12,flag)=ground_amp(:,1);
 end
 % filepath='G:\bluetooth\ant13\data_laoyang\0505\线极化\00000.txt';
-% filepath = 'E:\滴滴\汪博文\蓝牙(2)\13天线\data\data_laoyang\0505\线极化\00000.txt'
+filepath = 'E:\滴滴\汪博文\蓝牙(2)\13天线\data\data_laoyang\0505\线极化\00000.txt'
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_5数据测试\h=3m顺时针8圈.txt';
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_5数据测试\h=1.5m2圈.txt';
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_5数据测试\h1.2m4圈.txt';
-filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_5数据测试\0.8m3圈.txt';
+% filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_5数据测试\0.8m3圈.txt';
 
 [test_phase, test_amp]=testphase(filepath);
 
