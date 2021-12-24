@@ -34,8 +34,8 @@ class GUI(tk.Tk):
         # Location of the cat, mouse and Obstacles
         self.Cat_loc = np.array([0,0])
         self.Mouse_loc = np.array([N-1,N-1])
-        # self.Obstacle_loc = np.vstack((random.sample(range(1,N-1),N_Obstacle),random.sample(range(1,N-1),N_Obstacle))).T
-        self.Obstacle_loc = np.array([[1,2],[2,1]])
+        self.Obstacle_loc = np.vstack((random.sample(range(1,N-1),N_Obstacle),random.sample(range(1,N-1),N_Obstacle))).T
+        # self.Obstacle_loc = np.array([[1,2],[2,1]])
 
         # N * N * 4 
         # 0：Up 1: Right 2: Down 3: Left
@@ -71,7 +71,7 @@ class GUI(tk.Tk):
             self.canvas.create_line(self.margin*i,0,self.margin*i,self.HEIGHT)
 
         self.update()
-        time.sleep(0.01)
+        # time.sleep(0.01)
         
 
 
@@ -143,13 +143,77 @@ class SARSA(GUI):
 
 
 class Q_Learning(GUI):
-    def __init__(self,N,N_Obstacle):
+    def __init__(self,N,N_Obstacle,EPSILON,Alpha,Gamma):
         super().__init__(N,N_Obstacle)
+        # 0：Up 1: Right 2: Down 3: Left
+        self.action = 0
+        self.epsilon = EPSILON
+        self.alpha = Alpha
+        self.gamma = Gamma
+
+    def epsilon_greedy(self,state):
+        if random.random() > self.epsilon:
+            # print(random.random(),self.epsilon)
+            return random.randint(0,3)
+        else:
+            return np.argmax(self.Q[state[0],state[1],:])
+        
+    def move(self):
+        if(self.action==0):
+            s_next = np.array((self.Cat_loc[0]-1,self.Cat_loc[1]))
+            if s_next[0] < 0:
+                s_next[0] = 0
+            r = self.reward[s_next[0],s_next[1]]
+        elif(self.action==1):
+            s_next = np.array((self.Cat_loc[0],self.Cat_loc[1]+1))
+            if s_next[1] > self.N-1:
+                s_next[1] = self.N-1
+            r = self.reward[s_next[0],s_next[1]]
+        elif(self.action==2):
+            s_next = np.array((self.Cat_loc[0]+1,self.Cat_loc[1]))
+            if s_next[0] > self.N - 1:
+                s_next[0] = self.N - 1
+            r = self.reward[s_next[0],s_next[1]]
+        elif(self.action==3):
+            s_next = np.array((self.Cat_loc[0],self.Cat_loc[1]-1))
+            if s_next[1] < 0:
+                s_next[1] = 0
+            r = self.reward[s_next[0],s_next[1]]
+        return s_next,r
+
+
+    def update_Q(self) -> None:
+        self.show()
+        r_sum = 0
+        self.Cat_loc = np.array([0,0])
+        # print(self.Cat_loc,self.action)
+        while(1):
+            self.action = self.epsilon_greedy(self.Cat_loc)
+            s_next,r = self.move()
+            r_sum += r
+            action_ = np.argmax(self.Q[s_next[0],s_next[1],:])
+            self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action] = self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action] + self.alpha *(r + self.gamma * self.Q[s_next[0],s_next[1],action_]-self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action])
+            self.Cat_loc = s_next
+            if (self.Cat_loc==self.Obstacle_loc).all(1).any():
+                print('over')
+                break
+            if((self.Cat_loc==self.Mouse_loc).all()):
+                print('win')
+                break
+            # print(self.Cat_loc,self.action)
+            self.show()
+        print(r_sum)
 
 
 if __name__ == '__main__':
-    sarsa = SARSA(4,2,1,0.01,0.9)
-    for i in range(1000):
-        sarsa.update_Q()
-    sarsa.mainloop()
+    # sarsa = SARSA(4,2,0.9,0.01,0.9)
+    # for i in range(100):
+    #     sarsa.update_Q()
+    # sarsa.mainloop()
+    Q = Q_Learning(40,30,0.9,0.01,0.9)
+    for i in range(500):
+        Q.update_Q()
+    print('finish')
+    Q.mainloop()
+    
 
