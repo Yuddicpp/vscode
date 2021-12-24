@@ -34,7 +34,8 @@ class GUI(tk.Tk):
         # Location of the cat, mouse and Obstacles
         self.Cat_loc = np.array([0,0])
         self.Mouse_loc = np.array([N-1,N-1])
-        self.Obstacle_loc = np.vstack((random.sample(range(1,N-1),N_Obstacle),random.sample(range(1,N-1),N_Obstacle))).T
+        # self.Obstacle_loc = np.vstack((random.sample(range(1,N-1),N_Obstacle),random.sample(range(1,N-1),N_Obstacle))).T
+        self.Obstacle_loc = np.array([[1,2],[2,1]])
 
         # N * N * 4 
         # 0：Up 1: Right 2: Down 3: Left
@@ -65,12 +66,12 @@ class GUI(tk.Tk):
             self.canvas.create_rectangle(self.margin*loc[1],self.margin*loc[0],self.margin*loc[1]+self.margin,self.margin*loc[0]+self.margin,fill='black')
         
         # Draw the image of the map
-        for i in range(self.N+1):
+        for i in range(self.N):
             self.canvas.create_line(0,self.margin*i,self.WIDTH,self.margin*i)
             self.canvas.create_line(self.margin*i,0,self.margin*i,self.HEIGHT)
 
         self.update()
-        time.sleep(0.5)
+        time.sleep(0.01)
         
 
 
@@ -85,7 +86,8 @@ class SARSA(GUI):
         self.gamma = Gamma
 
     def epsilon_greedy(self,state):
-        if random.random() < self.epsilon:
+        if random.random() > self.epsilon:
+            # print(random.random(),self.epsilon)
             return random.randint(0,3)
         else:
             return np.argmax(self.Q[state[0],state[1],:])
@@ -116,18 +118,26 @@ class SARSA(GUI):
 
     def update_Q(self) -> None:
         self.show()
+        r_sum = 0
+        self.Cat_loc = np.array([0,0])
         self.action = self.epsilon_greedy(self.Cat_loc)
-        print(self.Cat_loc,self.action)
+        # print(self.Cat_loc,self.action)
         while(1):
             s_next,r = self.move()
-            if s_next in self.Obstacle_loc:
-                break
+            r_sum += r
             action_ = self.epsilon_greedy(s_next)
             self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action] = self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action] + self.alpha *(r + self.gamma * self.Q[s_next[0],s_next[1],action_]-self.Q[self.Cat_loc[0],self.Cat_loc[1],self.action])
             self.Cat_loc = s_next
             self.action = action_
-            print(self.Cat_loc,self.action)
+            if (self.Cat_loc==self.Obstacle_loc).all(1).any():
+                # print('over')
+                break
+            if((self.Cat_loc==self.Mouse_loc).all()):
+                print('win')
+                break
+            # print(self.Cat_loc,self.action)
             self.show()
+        print(r_sum)
     
 
 
@@ -138,7 +148,8 @@ class Q_Learning(GUI):
 
 
 if __name__ == '__main__':
-    sarsa = SARSA(4,2,0.1,0.1,0.1)
-    sarsa.update_Q()
+    sarsa = SARSA(4,2,1,0.01,0.9)
+    for i in range(1000):
+        sarsa.update_Q()
     sarsa.mainloop()
 
