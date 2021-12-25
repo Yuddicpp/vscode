@@ -12,6 +12,7 @@ from PIL import Image
 from PIL import ImageTk
 import numpy as np
 import random
+from matplotlib import pyplot as plt
 
 class GUI(tk.Tk):
     """
@@ -130,7 +131,7 @@ class SARSA(GUI):
             self.Cat_loc = s_next
             self.action = action_
             if (self.Cat_loc==self.Obstacle_loc).all(1).any():
-                # print('over')
+                print('over')
                 break
             if((self.Cat_loc==self.Mouse_loc).all()):
                 print('win')
@@ -138,6 +139,7 @@ class SARSA(GUI):
             # print(self.Cat_loc,self.action)
             self.show()
         print(r_sum)
+        return r_sum
     
 
 
@@ -203,17 +205,53 @@ class Q_Learning(GUI):
             # print(self.Cat_loc,self.action)
             self.show()
         print(r_sum)
+        return r_sum
 
 
 if __name__ == '__main__':
-    # sarsa = SARSA(4,2,0.9,0.01,0.9)
-    # for i in range(100):
-    #     sarsa.update_Q()
+
+    # sarsa = SARSA(10,8,0.9,0.1,0.9)
+    # sarsa.show()
     # sarsa.mainloop()
-    Q = Q_Learning(40,30,0.9,0.01,0.9)
-    for i in range(500):
-        Q.update_Q()
+
+    # sarsa = SARSA(4,2,0.9,0.1,0.9)
+    # epoch = 1000
+    # r = np.zeros(epoch)
+    # for i in range(epoch):
+    #     r[i] = sarsa.update_Q()
+    # print('finish')
+    # sarsa.mainloop()
+    # plt.plot(range(epoch),r)
+    # plt.show()
+
+
+    sarsa = SARSA(40,30,0.9,0.1,0.9)
+    epoch = 1000
+    r = np.zeros(epoch)
+    for i in range(epoch):
+        r[i] = sarsa.update_Q()
+        # if i%400==0 and i>0:
+        #     sarsa.reward[sarsa.Mouse_loc[0],sarsa.Mouse_loc[1]] = -1
+        #     sarsa.Mouse_loc = np.array([sarsa.Mouse_loc[0]-1,sarsa.Mouse_loc[1]])
+        #     sarsa.reward[sarsa.Mouse_loc[0],sarsa.Mouse_loc[1]] = 10
     print('finish')
-    Q.mainloop()
+    sarsa.mainloop()
+    plt.plot(range(epoch),r)
+    plt.show()
+
+
+    # Q = Q_Learning(4,2,0.9,0.1,0.9)
+    # epoch = 1000
+    # r = np.zeros(epoch)
+    # for i in range(epoch):
+    #     r[i] = Q.update_Q()
+    #     if i%400==0:
+    #         Q.reward[Q.Mouse_loc[0],Q.Mouse_loc[1]] = -1
+    #         Q.Mouse_loc = np.array([Q.Mouse_loc[0]-1,Q.Mouse_loc[1]])
+    #         Q.reward[Q.Mouse_loc[0],Q.Mouse_loc[1]] = 10
+    # print('finish')
+    # Q.mainloop()
+    # plt.plot(range(epoch),r)
+    # plt.show()
     
 
