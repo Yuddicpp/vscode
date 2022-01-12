@@ -6,6 +6,7 @@ close all
 % filepath = '数据\实验6\车锁\x=0.62_y=1_h=0.54';
 % filepath = 'E:\SGroup\Bluetooth\data_process\10.21数据\实验6\车锁\x=0.62_y=0_h=0.54'
 filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_12_13数据\x=-1m,y=-2m'
+% filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2021_8_23数据测试\8.23数据\左上角_密集_3m高\车锁h=0.54m\x=2.34_y=-1.24_车锁_3m_左上角_密集'
 % filepath='E:\滴滴\汪博文\蓝牙(2)\13天线\data\data_laoyang\0612\circle4.txt';
 
 % [Idata,Qdata,rssi]=read_file(filepath);
