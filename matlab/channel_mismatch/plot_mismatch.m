@@ -1,7 +1,7 @@
 function plot_mismatch(real_phase,test_phase)
 % subplot(1,2,1);
 figure();
-real_phase(3,find(real_phase(3,:)<-pi*9/10)) = pi;
+
 test1(:,1:5216)=test_phase(:,1:5216);
 test1(:,5217:5218)=test_phase(:,5215:5216);
 % test1=test_phase(:,1:1215);
@@ -12,10 +12,13 @@ test1(:,5217:5218)=test_phase(:,5215:5216);
 % figure();
 set(0,'defaultfigurecolor','w');
 % set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0, 1, 1]);
-plot((0:0.069:360)*pi/180,real_phase(3,:),'LineWidth',2,'Color','r');
-hold on
-plot((0:0.069:360)*pi/180,smooth(test1(3,:)),'LineWidth',2,'Color','b');
-
+for ii=1:12
+    subplot(3,4,ii);
+    real_phase(ii,find(real_phase(ii,:)<-pi*9/10)) = pi;
+    plot((0:0.069:360)*pi/180,real_phase(ii,:),'LineWidth',2,'Color','r');
+    hold on
+    plot((0:0.069:360)*pi/180,smooth(test1(ii,:)),'LineWidth',2,'Color','b');
+end
 set(gca,'FontName','Times','FontSize',14);
 xlabel('azimuth[rad]');
 ylabel('phase diff[rad]');
