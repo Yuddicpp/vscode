@@ -9,7 +9,7 @@ function loc=run_algorithm(IQ,DML_P,filepath)
 %输入：补偿了信号频率误差后的IQ数据
 %输出：位置估计结果
 page=size(IQ,3);
-save([filepath,'.mat'],'IQ')
+% save([filepath,'.mat'],'IQ')
 % phi=(0:1:359)*pi/180; theta=(0:1:60)*pi/180;
 
 loc1=[];
