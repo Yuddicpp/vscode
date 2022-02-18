@@ -9,7 +9,7 @@ function loc=run_algorithm(IQ,DML_P,filepath)
 %输入：补偿了信号频率误差后的IQ数据
 %输出：位置估计结果
 page=size(IQ,3);
-% save([filepath,'.mat'],'IQ')
+save([filepath,'.mat'],'IQ')
 % phi=(0:1:359)*pi/180; theta=(0:1:60)*pi/180;
 
 loc1=[];
@@ -19,6 +19,7 @@ M = [0 0 1 0 0]';
 P = diag([10.1 10.1 1.1 1.1 1]);
 for ii=1:page
     x=squeeze(IQ(:,:,ii));
+%     x = reshape(IQ(:,:,ii:ii+4),12,80);
     Pmusic=spectrum(DML_P,x);
     para(ii,1:2) = find_peaks1(Pmusic);
 %     mesh(Pmusic)
