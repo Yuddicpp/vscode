@@ -1,5 +1,5 @@
 function obj=serial_config()
-obj=serial('com6');    %连接基站时确�?
+obj=serial('com4');    %连接基站时确�?
 obj.InputBufferSize=2068*3;
 % obj.timeout=0.6;
 obj.BaudRate=921600;

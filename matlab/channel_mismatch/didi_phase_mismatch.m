@@ -14,7 +14,8 @@ end
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_1_19数据\1圈 (2).txt';
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_1_20数据\4圈1米.txt';
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_1_21数据\new5圈.txt';
-filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_1_28数据\4圈.txt';
+% filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_1_28数据\4圈.txt';
+filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_23数据\8圈顺时针.txt';
 
 [test_phase, test_amp]=testphase(filepath);
 

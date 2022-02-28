@@ -42,7 +42,8 @@ end
 end
 
 function Q=gene_Q(theta,phi)
-R=0.059;
+% R=0.059;
+R=0.05;
 c=3e8;
 f=2.44e9;
 A=2*pi*f/c;
@@ -67,7 +68,8 @@ L=[-sin(phi) cos(phi)*cos(theta);cos(phi) sin(phi)*cos(theta)];
 % P=[cos(gama);sin(gama)*exp(1j*yita)];
 D=U*beta*L;
 amp_offset=[342 496 279 387 393 310 304 380 344 430 275 400];
-phase_offset=exp(1j.*[0 2.1 -2.4 -2.4 -1.35 0.8 -2.35 -2.4 -1.4 0.8 -1.1 -2.14]);
+% phase_offset=exp(1j.*[0 2.1 -2.4 -2.4 -1.35 0.8 -2.35 -2.4 -1.4 0.8 -1.1 -2.14]);
+phase_offset=exp(1j.*[0 0.1 1.0 -0.1 -0.5 -0.8 -0.1 -1.0 0.1 -2.4 0.2 -0.2]);
 offset=amp_offset.*phase_offset;
 B=diag(offset);
 
@@ -124,11 +126,12 @@ para1=[elevation,azimuth];
 end
 
 function loc=location(para)
-height=3;
+height=1.8;
 para=para*pi/180;
 para(:,2)=pi-para(:,2); %由于补偿的缘故，方位角需要偏转pi
 aa=tan(para(:,1))*height;
-loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
+loc=[para(:,1),para(:,2)];
+% loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
 
 end
 

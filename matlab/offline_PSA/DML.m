@@ -9,7 +9,7 @@ function loc=run_algorithm(IQ,DML_P,filepath)
 %输入：补偿了信号频率误差后的IQ数据
 %输出：位置估计结果
 page=size(IQ,3);
-save([filepath,'.mat'],'IQ')
+% save([filepath,'.mat'],'IQ')
 % phi=(0:1:359)*pi/180; theta=(0:1:60)*pi/180;
 
 loc1=[];
@@ -143,7 +143,8 @@ end
 
 function loc=location(para1,filepath)
 %%
-height=1.881;                                                                   %基站与标签高度差，须设置与实际一致
+% height=1.881;                                                                   %基站与标签高度差，须设置与实际一致
+height=1.839;
 para=para1*pi/180;
 para(:,2)=pi-para(:,2);                                                         %由于补偿的缘故，方位角需要偏转pi
 para1(:,2)=180-para1(:,2); 
