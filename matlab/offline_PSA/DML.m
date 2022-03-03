@@ -14,6 +14,7 @@ page=size(IQ,3);
 
 loc1=[];
 his_loc=[];
+P_MUSIC_all = [];
 ind=1;
 M = [0 0 1 0 0]';
 P = diag([10.1 10.1 1.1 1.1 1]);
@@ -21,6 +22,7 @@ for ii=1:page
     x=squeeze(IQ(:,:,ii));
 %     x = reshape(IQ(:,:,ii:ii+4),12,80);
     Pmusic=spectrum(DML_P,x);
+    P_MUSIC_all(:,:,ii) = Pmusic;
     para(ii,1:2) = find_peaks1(Pmusic);
 %     mesh(Pmusic)
     loc(ii,:)=location(para(ii,:),filepath);
@@ -40,8 +42,9 @@ for ii=1:page
     ii
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 end
+save([filepath,'_Pmusic.mat'],'P_MUSIC_all');
 % plot(loc1(1,:),loc1(2,:));
-track_plot(loc1.');
+track_plot(loc1.',filepath);
 end
 
 function Pmusic=spectrum(P,x)
@@ -86,6 +89,7 @@ L=[-sin(phi) cos(phi)*cos(theta);cos(phi) sin(phi)*cos(theta)];
 D=U*beta*L;
 amp_offset=[342 496 279 387 393 310 304 380 344 430 275 400];
 phase_offset=exp(1j.*[0 2.1 -2.4 -2.4 -1.35 0.8 -2.35 -2.4 -1.4 0.8 -1.1 -2.14]);
+% phase_offset=exp(1j.*[0 0.1 1.0 -0.1 -0.5 -0.8 -0.1 -1.0 0.1 -2.4 0.2 -0.2]);
 offset=amp_offset.*phase_offset;                                            
 B=diag(offset);                                                             %误差增益矩阵
 
@@ -157,7 +161,7 @@ loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
 end
 
 
-function track_plot(pos)
+function track_plot(pos,filepath)
 %%可视化位置估计结果
 axis([-6,6,-6,6]);
 grid on;
@@ -184,6 +188,8 @@ plot(0,0,'^','MarkerFaceColor',[rand rand rand],'MarkerSize',12,'MarkerEdgeColor
 % ax.GridColor = [1, 1, 1];
 % pause(0.01);
 % clf;
+
+% saveas(gcf,[filepath,'.jpg']);
 end
 
 

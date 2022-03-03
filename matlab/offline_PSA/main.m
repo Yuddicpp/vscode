@@ -12,21 +12,33 @@ close all
 
 %%
 
-% filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_16数据\';
-% files =  dir(fullfile(filepath,'*.txt'));
-% 
-% for i = 1:30
-%     file = [files(i).folder,'\',files(i).name];
-%     l = length(file);
-%     file = file(1:l-4)
-%     [Idata,Qdata,rssi]=read_file16([file,'.txt']);
+filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_25数据\';
+files =  dir(fullfile(filepath,'*.txt'));
+
+for i = 1:59
+    close all;
+    file = [files(i).folder,'\',files(i).name];
+    l = length(file);
+    file = file(1:l-4)
+    [Idata,Qdata,rssi]=read_file16([file,'.txt']);
 %     save([file,'_RSSI.mat'],'rssi');
-% end
+    [data,index]=data_process1(Idata,Qdata);
+    data = compensate(data,index);
+    choose = 'ant_6';%本参数用于选择3天线定位还是6天线定位
+    if choose=='ant_3'
+        data=ant_3(data);
+        P=gene_DML_P_ant3();
+    elseif choose=='ant_6'
+        P=gene_DML_P_ant6();    
+    end
+    
+    loc=DML(data,P,file);
+end
 
 %%
 % x从2开始
 
-filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_25数据\x=-2m,y=0m';
+filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_23数据\8圈顺时针';
 [Idata,Qdata,rssi]=read_file16([filepath,'.txt']);
 
 
