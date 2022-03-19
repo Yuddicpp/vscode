@@ -42,8 +42,8 @@ end
 end
 
 function Q=gene_Q(theta,phi)
-% R=0.059;
-R=0.05;
+R=0.059;
+% R=0.05;
 c=3e8;
 f=2.44e9;
 A=2*pi*f/c;
@@ -126,12 +126,13 @@ para1=[elevation,azimuth];
 end
 
 function loc=location(para)
-height=1.8;
+% height=1.8;
+height = 2.794-0.171;
 para=para*pi/180;
 para(:,2)=pi-para(:,2); %由于补偿的缘故，方位角需要偏转pi
 aa=tan(para(:,1))*height;
-loc=[para(:,1)/pi*180,para(:,2)/pi*180];
-% loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
+% loc=[para(:,1)/pi*180,para(:,2)/pi*180];
+loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
 
 end
 
