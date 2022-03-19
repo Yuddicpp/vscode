@@ -5,9 +5,9 @@ end
 
 function loc=run_algorithm(IQ,DML_P,filepath)
 %%
-%½Ç¶È²ÎÊı¹À¼ÆËã·¨
-%ÊäÈë£º²¹³¥ÁËĞÅºÅÆµÂÊÎó²îºóµÄIQÊı¾İ
-%Êä³ö£ºÎ»ÖÃ¹À¼Æ½á¹û
+%è§’åº¦å‚æ•°ä¼°è®¡ç®—æ³•
+%è¾“å…¥ï¼šè¡¥å¿äº†ä¿¡å·é¢‘ç‡è¯¯å·®åçš„IQæ•°æ®
+%è¾“å‡ºï¼šä½ç½®ä¼°è®¡ç»“æœ
 page=size(IQ,3);
 save([filepath,'.mat'],'IQ')
 % phi=(0:1:359)*pi/180; theta=(0:1:60)*pi/180;
@@ -18,7 +18,7 @@ P_MUSIC_all = [];
 ind=1;
 M = [0 0 1 0 0]';
 P = diag([10.1 10.1 1.1 1.1 1]);
-% 12*16 Æ´½ÓÎª 12*48
+% 12*16 æ‹¼æ¥ä¸º 12*48
 for ii=1:page
     
 %     for k = 1:12
@@ -38,7 +38,7 @@ for ii=1:page
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%
-    %Èİ»ı¿¨¶ûÂüÂË²¨
+    %å®¹ç§¯å¡å°”æ›¼æ»¤æ³¢
     if exist('MM_CKF','var')
         
         [his_loc,new_loc,M,P,ind,MM_CKF,PP_CKF]=filter_ckf(his_loc,loc(ii,:).',M,P,ind,MM_CKF,PP_CKF);
@@ -52,7 +52,7 @@ end
 save([filepath,'_Pmusic.mat'],'P_MUSIC_all');
 % plot(loc1(1,:),loc1(2,:));
 % track_plot(loc1.',filepath);
-% ²»Ê¹ÓÃ¿¨¶ûÂüÂË²¨
+% ä¸ä½¿ç”¨å¡å°”æ›¼æ»¤æ³¢
 track_plot(loc,filepath)
 end
 
@@ -100,7 +100,7 @@ amp_offset=[342 496 279 387 393 310 304 380 344 430 275 400];
 phase_offset=exp(1j.*[0 2.1 -2.4 -2.4 -1.35 0.8 -2.35 -2.4 -1.4 0.8 -1.1 -2.14]);
 % phase_offset=exp(1j.*[0 0.1 1.0 -0.1 -0.5 -0.8 -0.1 -1.0 0.1 -2.4 0.2 -0.2]);
 offset=amp_offset.*phase_offset;                                            
-B=diag(offset);                                                             %Îó²îÔöÒæ¾ØÕó
+B=diag(offset);                                                             %è¯¯å·®å¢ç›ŠçŸ©é˜µ
 
 Q=B*D;
 end
@@ -108,7 +108,7 @@ end
 function beta = ant_direction()
 %%
 
-dir_ant=[180 270 120 210 60 150 0 90 300 30 240 330]*pi/180;                %ÌìÏß³¯Ïò
+dir_ant=[180 270 120 210 60 150 0 90 300 30 240 330]*pi/180;                %å¤©çº¿æœå‘
 beta=zeros(12,2);
 for ii=1:12
    beta(ii,:)=[cos(dir_ant(ii)) sin(dir_ant(ii))]; 
@@ -156,21 +156,16 @@ end
 
 function loc=location(para1,filepath)
 %%
-% height=1.881;                                                                   %»ùÕ¾Óë±êÇ©¸ß¶È²î£¬ĞëÉèÖÃÓëÊµ¼ÊÒ»ÖÂ
+% height=1.881;                                                                   %åŸºç«™ä¸æ ‡ç­¾é«˜åº¦å·®ï¼Œé¡»è®¾ç½®ä¸å®é™…ä¸€è‡´
 % height=1.839;
 
 % 2022.3.18 2.796-0.171
 % height=2.625;
 
 % 2022.3.19 1.660-0.160
-% height=1.5;
-% 2.660-0.160
-% height=2.5;
-% 3.000-0.160
-height=2.840;
-
+height=1.5;
 para=para1*pi/180;
-para(:,2)=pi-para(:,2);                                                         %ÓÉÓÚ²¹³¥µÄÔµ¹Ê£¬·½Î»½ÇĞèÒªÆ«×ªpi
+para(:,2)=pi-para(:,2);                                                         %ç”±äºè¡¥å¿çš„ç¼˜æ•…ï¼Œæ–¹ä½è§’éœ€è¦åè½¬pi
 para1(:,2)=180-para1(:,2); 
 aa=tan(para(:,1))*height;
 loc=[aa.*cos(para(:,2)),aa.*sin(para(:,2))];
@@ -182,7 +177,7 @@ end
 
 
 function track_plot(pos,filepath)
-%%¿ÉÊÓ»¯Î»ÖÃ¹À¼Æ½á¹û
+%%å¯è§†åŒ–ä½ç½®ä¼°è®¡ç»“æœ
 axis([-6,6,-6,6]);
 grid on;
 set(gcf, 'Units', 'Normalized', 'OuterPosition', [0, 0, 1, 1]);
@@ -191,8 +186,8 @@ set(gca,'YTick',(-6:0.4:6));
 set(gca,'Color',[0 0 0]);
 hold on;
 
-N = 2;  % ÏëÒªµÄ×ø±êÖáÏÔÊ¾£¬¼´¸ôÒ»¸öÍø¸ñÏÔÊ¾Ò»¸ö¿Ì¶È£¬10/5 = 2
-% ÉèÖÃÏëÒªµÄ×ø±êÖá¿Ì¶È
+N = 2;  % æƒ³è¦çš„åæ ‡è½´æ˜¾ç¤ºï¼Œå³éš”ä¸€ä¸ªç½‘æ ¼æ˜¾ç¤ºä¸€ä¸ªåˆ»åº¦ï¼Œ10/5 = 2
+% è®¾ç½®æƒ³è¦çš„åæ ‡è½´åˆ»åº¦
 a = get(gca,'XTickLabel');  
 b = cell(size(a));
 b(mod(1:size(a,1),N)==1,:) = a(mod(1:size(a,1),N)==1,:);
