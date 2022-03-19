@@ -10,10 +10,11 @@ filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\
 
 
 %%
-filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_25数据\x=2m,y=0m_Pmusic.mat';
-loc_x=2;
-loc_y=0;
-H = 1.839;
+filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_3_18数据\x=0,y=-2.69_Pmusic.mat';
+loc_x=0;
+loc_y=-2.769;
+% 2022.3.18 2.796-0.171
+H=2.625;
 if(loc_x==0&&loc_y==0)
     phi = 0;
     theta = 0;
