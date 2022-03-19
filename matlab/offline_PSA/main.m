@@ -39,7 +39,7 @@ end
 % x从2开始
 
 % filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_2_25数据\x=-2m,y=3m';
-filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_3_19数据\2.840m\x=2.840m,y=0m_垫子';
+filepath = 'E:\BaiduNetdiskWorkspace\研究生\工作\滴滴项目\数据测试\2022_3_19数据\1.5m支架\x=1.5m,y=0m_支架_铁板';
 [Idata,Qdata,rssi]=read_file16([filepath,'.txt']);
 
 
