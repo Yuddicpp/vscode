@@ -51,9 +51,9 @@ for ii=1:page
 end
 save([filepath,'_Pmusic.mat'],'P_MUSIC_all');
 % plot(loc1(1,:),loc1(2,:));
-% track_plot(loc1.',filepath);
+track_plot(loc1.',filepath);
 % ²»Ê¹ÓÃ¿¨¶ûÂüÂË²¨
-track_plot(loc,filepath)
+% track_plot(loc,filepath)
 end
 
 function Pmusic=spectrum(P,x)
