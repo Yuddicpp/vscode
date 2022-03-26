@@ -1,4 +1,4 @@
-clear; close all;
+% clear; close all;
 %%%%%%%% MUSIC for Uniform Linear Array%%%%%%%%
 derad = pi/180;      %角度->弧度
 N = 8;               % 阵元个数        
