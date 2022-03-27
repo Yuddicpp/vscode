@@ -1,6 +1,9 @@
 {
     "git.ignoreLimitWarning": true,
     "files.associations": {
-        "stack": "cpp"
+        "*.m": "matlab",
+        "stack": "cpp",
+        "iostream": "cpp",
+        "iosfwd": "cpp"
     }
 }
